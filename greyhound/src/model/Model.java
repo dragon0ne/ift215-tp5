@@ -5,12 +5,13 @@ package model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 
 /**
  * @author birj2002
  *
  */
-public class Model {
+public class Model extends Observable {
 	private Map<Point, Trajet> tousLesTrajets;
 
 	public Model() {
@@ -32,7 +33,16 @@ public class Model {
 	} 
 
 	
-	
+	/**
+	 * notifie la vue
+	 * Cette méthode est appelée lorsqu'il a un changement dans la classe modele
+	 */
+	public void notifyObserver()
+	{
+		
+		setChanged();		
+		notifyObservers();	
+	}
 	
 
 }
