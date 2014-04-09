@@ -27,7 +27,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class Acceuil extends JPanel {
+public class Accueil extends JPanel {
 
 	
 	private JLabel lblBienvenueAuGreyhound;
@@ -35,11 +35,12 @@ public class Acceuil extends JPanel {
 	private JButton btnEN;
 	private JButton btn_calculer;
 	private JButton btn_consulter;
+	private JButton btnQuit;
 
 	/**
 	 * Create the frame.
 	 */
-	public Acceuil() {
+	public Accueil() {
 		
 
 		this.setLayout(new BorderLayout());
@@ -64,6 +65,9 @@ public class Acceuil extends JPanel {
 		
 		btnEN.setHorizontalAlignment(SwingConstants.LEFT);
 		btnEN.setIcon(new ImageIcon("en.jpg"));
+		
+		btnQuit = new JButton("Quit");
+	
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -71,15 +75,17 @@ public class Acceuil extends JPanel {
 					.addComponent(btnFR)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnEN)
-					.addGap(312))
+					.addPreferredGap(ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+					.addComponent(btnQuit))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap(16, Short.MAX_VALUE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnFR, Alignment.TRAILING)
-						.addComponent(btnEN, Alignment.TRAILING)))
+						.addComponent(btnEN, Alignment.TRAILING)
+						.addComponent(btnQuit, Alignment.TRAILING)))
 		);
 		panel.setLayout(gl_panel);
 		
@@ -165,7 +171,12 @@ public class Acceuil extends JPanel {
 	public void setBtn_consulter(JButton btn_consulter) {
 		this.btn_consulter = btn_consulter;
 	}
-	
-	
 
+	/**
+	 * @return the btnNewButton
+	 */
+	public JButton getBtnQuit() {
+		return btnQuit;
+	}
+	
 }

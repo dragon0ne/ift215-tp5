@@ -42,12 +42,12 @@ setLayout(new BorderLayout(0, 0));
 		JPanel resultsPanel = new JPanel();
 		add(resultsPanel, BorderLayout.CENTER);
 
-		List<String> details =  new ArrayList<String>();
-		details.add("plop");
-		details.add("test");
-		resultsPanel.add(new ResultatItineraire("h1", "h2", "d1",details));
-		resultsPanel.add(new ResultatItineraire("h1", "h2", "d1",details));
-		resultsPanel.add(new ResultatItineraire("h1", "h2", "d1", details));
+//		List<String> details =  new ArrayList<String>();
+//		details.add("plop");
+//		details.add("test");
+//		resultsPanel.add(new ResultatItineraire("h1", "h2", "d1",details));
+//		resultsPanel.add(new ResultatItineraire("h1", "h2", "d1",details));
+//		resultsPanel.add(new ResultatItineraire("h1", "h2", "d1", details));
 		
 		JList list = new JList();
 		resultsPanel.add(list);

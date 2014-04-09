@@ -43,6 +43,9 @@ public class Point {
 	public void setMM(int mM) {
 		MM = mM;
 	}
+	public String getHeure(){
+		return (this.HH +":"+this.MM);
+	}
 	
 	
 	

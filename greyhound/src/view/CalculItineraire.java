@@ -23,16 +23,26 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
+
+import java.util.Calendar;
+import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JComboBox;
+import javax.swing.JTextPane;
+import javax.swing.SpinnerDateModel;
+import java.util.Date;
 
 public class CalculItineraire extends JPanel {
 
 	private JPanel contentPane;
-	private JTextField textLieuDepart;
-	private JTextField textLieuArrive;
-	private JTextField textDateDepart;
+	private JComboBox cbLieuDepart;
+	private JComboBox cbLieuArrive;
+
 	private JTextField textDateRetour;
 	private ButtonGroup buttons;
 	private JRadioButton btnAllerSimple;
@@ -42,6 +52,22 @@ public class CalculItineraire extends JPanel {
 	private JSpinner spinnerEnfants; 
 	private JButton btnFR;
 	private JButton btnEN;
+	private JLabel labelLieuDepart;
+	private JLabel labelLieuArrive;
+	private JLabel labelDateDepart;
+	private JLabel labelDateRetour;
+	private JLabel lblAdultes;
+	private JLabel lblEtudiants;
+	private JLabel lblEnfants;
+	private JLabel label;
+	private JLabel labelLogo;
+	private JButton btnAnnuler;
+	private JButton btnCalculer;
+	private JLabel label_1;
+	private TitledBorder titled; 
+	private JSpinner dateDepart;
+	private JSpinner dateRetour;
+	private JButton btnQuit;
 
 	/**
 	 * Launch the application.
@@ -63,51 +89,46 @@ public class CalculItineraire extends JPanel {
 	 * Create the frame.
 	 */
 	public CalculItineraire() {
-		setBounds(100, 100, 817, 586);
+		this.setBounds(100, 100, 600, 400);
 		contentPane = new JPanel();
-		this.setSize(20, 200);
-		GridBagLayout gbl_this = new GridBagLayout();
-		gbl_this.columnWidths = new int[]{613, 0};
-		gbl_this.rowHeights = new int[]{60, 39, 51, 88, 293, 0};
-		gbl_this.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_this.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		this.setLayout(gbl_this);
+		this.setSize(700, 500);
+		this.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JPanel panelLogo = new JPanel();
+		FlowLayout flowLayout_0 = (FlowLayout) panelLogo.getLayout();
+		flowLayout_0.setHgap(0);
+		flowLayout_0.setAlignment(FlowLayout.LEFT);
+		this.add(panelLogo);
+		
+		labelLogo = new JLabel("Calculer Itineraire");
+		labelLogo.setIcon(new ImageIcon("C:\\Users\\HELL\\Desktop\\ift215 h14\\greyhound\\logo_greyhound_200_67.jpg"));
+		labelLogo.setForeground(Color.GRAY);
+		labelLogo.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		panelLogo.add(labelLogo);
 		
 		
 		
+		JPanel panelLieu = new JPanel();
+		this.add(panelLieu);
+		panelLieu.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 5));
 		
-		JPanel panelLabelLieu = new JPanel();
-		GridBagConstraints gbc_panelLabelLieu = new GridBagConstraints();
-		gbc_panelLabelLieu.anchor = GridBagConstraints.WEST;
-		gbc_panelLabelLieu.insets = new Insets(0, 0, 5, 0);
-		gbc_panelLabelLieu.gridx = 0;
-		gbc_panelLabelLieu.gridy = 0;
-		this.add(panelLabelLieu, gbc_panelLabelLieu);
-		panelLabelLieu.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 5));
-		
-		JLabel labelLieuDepart = new JLabel("Lieu de d\u00E9part :   ");
-		panelLabelLieu.add(labelLieuDepart);
+		labelLieuDepart = new JLabel("Lieu de d\u00E9part:   ");
+		panelLieu.add(labelLieuDepart);
 		labelLieuDepart.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		textLieuDepart = new JTextField();
-		panelLabelLieu.add(textLieuDepart);
-		textLieuDepart.setColumns(10);
+		cbLieuDepart = new JComboBox();
+		panelLieu.add(cbLieuDepart);
 		
-		JLabel labelLieuArrive = new JLabel("Lieu d'arriv\u00E9e :   ");
-		panelLabelLieu.add(labelLieuArrive);
+		labelLieuArrive = new JLabel("Lieu d'arriv\u00E9e:   ");
+		panelLieu.add(labelLieuArrive);
 		labelLieuArrive.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		textLieuArrive = new JTextField();
-		panelLabelLieu.add(textLieuArrive);
-		textLieuArrive.setColumns(10);
+		cbLieuArrive = new JComboBox();
+		panelLieu.add(cbLieuArrive);
 		
 		JPanel panelRadioBouton = new JPanel();
-		GridBagConstraints gbc_panelRadioBouton = new GridBagConstraints();
-		gbc_panelRadioBouton.anchor = GridBagConstraints.WEST;
-		gbc_panelRadioBouton.insets = new Insets(0, 0, 5, 0);
-		gbc_panelRadioBouton.gridx = 0;
-		gbc_panelRadioBouton.gridy = 1;
-		this.add(panelRadioBouton, gbc_panelRadioBouton);
+		this.add(panelRadioBouton);
 		FlowLayout flowLayout_2 = (FlowLayout) panelRadioBouton.getLayout();
 		flowLayout_2.setHgap(15);
 		flowLayout_2.setAlignment(FlowLayout.LEFT);
@@ -135,76 +156,76 @@ public class CalculItineraire extends JPanel {
 		FlowLayout flowLayout_3 = (FlowLayout) panelDate.getLayout();
 		flowLayout_3.setHgap(20);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panelDate = new GridBagConstraints();
-		gbc_panelDate.anchor = GridBagConstraints.WEST;
-		gbc_panelDate.insets = new Insets(0, 0, 5, 0);
-		gbc_panelDate.gridx = 0;
-		gbc_panelDate.gridy = 2;
-		this.add(panelDate, gbc_panelDate);
+		this.add(panelDate);
 		
-		JLabel labelDateDepart = new JLabel("Date de d\u00E9part : ");
+		labelDateDepart = new JLabel("Date de d\u00E9part : ");
 		panelDate.add(labelDateDepart);
 		
-		textDateDepart = new JTextField();
-		panelDate.add(textDateDepart);
-		textDateDepart.setColumns(10);
+			
+		dateDepart = new JSpinner();
+		dateDepart.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
+		dateDepart.setEditor(new JSpinner.DateEditor(dateDepart, "dd-MM-yyyy"));
+		panelDate.add(dateDepart);
 		
-		JLabel labelDateRetour = new JLabel("Date de retour : ");
+		labelDateRetour = new JLabel("Date de retour : ");
 		panelDate.add(labelDateRetour);
 		
-		textDateRetour = new JTextField();
-		panelDate.add(textDateRetour);
-		textDateRetour.setColumns(10);
+		dateRetour = new JSpinner();
+		dateRetour.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
+		dateRetour.setEditor(new JSpinner.DateEditor(dateRetour, "dd-MM-yyyy"));
+		panelDate.add(dateRetour);
 		
 		
-		TitledBorder titled;   
+		  
 		Border blackline = BorderFactory.createLineBorder(Color.black);
-		titled = BorderFactory.createTitledBorder(blackline,"Billets");
+		titled = BorderFactory.createTitledBorder(blackline,"Billets/Tickets");
+		
+		titled.setTitle("Billets");
 		titled.setTitleJustification(TitledBorder.CENTER);
 		titled.setTitlePosition(TitledBorder.DEFAULT_POSITION);
-
 		
 		
 		
 		JPanel panelBillets = new JPanel();
-		panelBillets.setBorder(titled);
+		panelBillets.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Billets/Tickets", TitledBorder.LEFT, TitledBorder.TOP, null, null));
 		FlowLayout flowLayout_4 = (FlowLayout) panelBillets.getLayout();
 		flowLayout_4.setHgap(20);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panelBillets = new GridBagConstraints();
-		gbc_panelBillets.anchor = GridBagConstraints.WEST;
-		gbc_panelBillets.insets = new Insets(0, 0, 5, 0);
-		gbc_panelBillets.gridx = 0;
-		gbc_panelBillets.gridy = 3;
-		this.add(panelBillets, gbc_panelBillets);
+		this.add(panelBillets);
 		
-		JLabel lblAdultes = new JLabel("Adultes : ");
+		lblAdultes = new JLabel("Adultes : ");
 		panelBillets.add(lblAdultes);
 		
 		spinnerAdultes = new JSpinner();
 		panelBillets.add(spinnerAdultes);
 		
-		JLabel lblEtudiants = new JLabel("\u00C9tudiants : ");
+		lblEtudiants = new JLabel("\u00C9tudiants : ");
 		panelBillets.add(lblEtudiants);
 		
 		spinnerEtudiants = new JSpinner();
 		panelBillets.add(spinnerEtudiants);
 		
-		JLabel lblEnfants = new JLabel("Enfants");
+		lblEnfants = new JLabel("Enfants :");
 		panelBillets.add(lblEnfants);
 		
 		spinnerEnfants = new JSpinner();
 		panelBillets.add(spinnerEnfants);
 		
+		JPanel panelBtnAction = new JPanel();
+		FlowLayout flowLayout_btn = (FlowLayout) panelBtnAction.getLayout();
+		flowLayout_btn.setHgap(0);
+		flowLayout_btn.setAlignment(FlowLayout.RIGHT);
+		this.add(panelBtnAction);
+		
+		label_1 = new JLabel("  ");
+		panelBtnAction.add(label_1);
+		
+		btnCalculer = new JButton("Calculer");
+		panelBtnAction.add(btnCalculer);
+		
 		JPanel panelDrapeaux = new JPanel();
-		FlowLayout flowLayout_5 = (FlowLayout) panelDrapeaux.getLayout();
-		flowLayout_5.setHgap(20);
-		flowLayout_5.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_panelDrapeaux = new GridBagConstraints();
-		gbc_panelDrapeaux.anchor = GridBagConstraints.SOUTHWEST;
-		gbc_panelDrapeaux.gridx = 0;
-		gbc_panelDrapeaux.gridy = 4;
-		this.add(panelDrapeaux, gbc_panelDrapeaux);
+		this.add(panelDrapeaux);
+		
 		
 		btnFR = new JButton("");
 		btnFR.setHorizontalAlignment(SwingConstants.LEFT);
@@ -215,37 +236,165 @@ public class CalculItineraire extends JPanel {
 		btnEN.setHorizontalAlignment(SwingConstants.LEFT);
 		btnEN.setIcon(new ImageIcon("en.jpg"));
 		
-		panelDrapeaux.add(btnFR);
-		panelDrapeaux.add(btnEN);
+		btnQuit = new JButton("Quit");
+		
+		btnAnnuler = new JButton("Retour");
+		GroupLayout gl_panelDrapeaux = new GroupLayout(panelDrapeaux);
+		gl_panelDrapeaux.setHorizontalGroup(
+			gl_panelDrapeaux.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelDrapeaux.createSequentialGroup()
+					.addComponent(btnFR)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnEN)
+					.addPreferredGap(ComponentPlacement.RELATED, 490, Short.MAX_VALUE)
+					.addComponent(btnAnnuler)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnQuit))
+		);
+		gl_panelDrapeaux.setVerticalGroup(
+			gl_panelDrapeaux.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelDrapeaux.createSequentialGroup()
+					.addContainerGap(47, Short.MAX_VALUE)
+					.addGroup(gl_panelDrapeaux.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnFR, Alignment.TRAILING)
+						.addComponent(btnEN, Alignment.TRAILING)
+						.addGroup(Alignment.TRAILING, gl_panelDrapeaux.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnQuit)
+							.addComponent(btnAnnuler))))
+		);
+		panelDrapeaux.setLayout(gl_panelDrapeaux);
 		
 		
 	}
 
 	
 
-	public JTextField getTextLieuDepart() {
-		return textLieuDepart;
+	/**
+	 * @return the btnQuit
+	 */
+	public JButton getBtnQuit() {
+		return btnQuit;
 	}
 
-	public void setTextLieuDepart(JTextField textLieuDepart) {
-		this.textLieuDepart = textLieuDepart;
+
+
+	/**
+	 * @return the btnAnnuler
+	 */
+	public JButton getBtnAnnuler() {
+		return btnAnnuler;
 	}
 
-	public JTextField getTextLieuArrive() {
-		return textLieuArrive;
+
+
+	/**
+	 * @return the btnCalculer
+	 */
+	public JButton getBtnCalculer() {
+		return btnCalculer;
 	}
 
-	public void setTextLieuArrive(JTextField textLieuArrive) {
-		this.textLieuArrive = textLieuArrive;
+
+
+	/**
+	 * @return the labelLogo
+	 */
+	public JLabel getLabelLogo() {
+		return labelLogo;
 	}
 
-	public JTextField getTextDateDepart() {
-		return textDateDepart;
+
+
+	/**
+	 * @return the dateDepart
+	 */
+	public JSpinner getDateDepart() {
+		return dateDepart;
 	}
 
-	public void setTextDateDepart(JTextField textDateDepart) {
-		this.textDateDepart = textDateDepart;
+
+
+	/**
+	 * @return the dateRetour
+	 */
+	public JSpinner getDateRetour() {
+		return dateRetour;
 	}
+
+
+
+	/**
+	 * @return the labelLieuDepart
+	 */
+	public JLabel getLabelLieuDepart() {
+		return labelLieuDepart;
+	}
+
+
+
+	/**
+	 * @return the labelLieuArrive
+	 */
+	public JLabel getLabelLieuArrive() {
+		return labelLieuArrive;
+	}
+
+
+
+	/**
+	 * @return the labelDateDepart
+	 */
+	public JLabel getLabelDateDepart() {
+		return labelDateDepart;
+	}
+
+
+
+	/**
+	 * @return the labelDateRetour
+	 */
+	public JLabel getLabelDateRetour() {
+		return labelDateRetour;
+	}
+
+
+
+	/**
+	 * @return the titled
+	 */
+	public TitledBorder getTitled() {
+		return titled;
+	}
+
+
+
+	/**
+	 * @return the lblAdultes
+	 */
+	public JLabel getLblAdultes() {
+		return lblAdultes;
+	}
+
+
+
+	/**
+	 * @return the lblEtudiants
+	 */
+	public JLabel getLblEtudiants() {
+		return lblEtudiants;
+	}
+
+
+
+	/**
+	 * @return the lblEnfants
+	 */
+	public JLabel getLblEnfants() {
+		return lblEnfants;
+	}
+
+
+
 
 	public JTextField getTextDateRetour() {
 		return textDateRetour;
@@ -317,6 +466,42 @@ public class CalculItineraire extends JPanel {
 
 	public void setBtnEN(JButton btnEN) {
 		this.btnEN = btnEN;
+	}
+
+
+
+	/**
+	 * @return the cbLieuDepart
+	 */
+	public JComboBox getCbLieuDepart() {
+		return cbLieuDepart;
+	}
+
+
+
+	/**
+	 * @param cbLieuDepart the cbLieuDepart to set
+	 */
+	public void setCbLieuDepart(JComboBox cbLieuDepart) {
+		this.cbLieuDepart = cbLieuDepart;
+	}
+
+
+
+	/**
+	 * @return the cbLieuArrive
+	 */
+	public JComboBox getCbLieuArrive() {
+		return cbLieuArrive;
+	}
+
+
+
+	/**
+	 * @param cbLieuArrive the cbLieuArrive to set
+	 */
+	public void setCbLieuArrive(JComboBox cbLieuArrive) {
+		this.cbLieuArrive = cbLieuArrive;
 	}
 	
 	

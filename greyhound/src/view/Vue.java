@@ -9,7 +9,7 @@ import javax.swing.UIManager;
 
 public class Vue extends JFrame implements Observer {
 	
-	private Acceuil accueil = new Acceuil();
+	private Accueil accueil = new Accueil();
 	private CalculItineraire calculItineraire = new CalculItineraire();
 	private ItinerairesProposees itinerairesProposees = new ItinerairesProposees();
 	private ConsultationHoraire consultationHoraire;
@@ -46,26 +46,94 @@ public class Vue extends JFrame implements Observer {
 	
 	
 	
-	public Acceuil getAcceuil() {
+	/**
+	 * @return the accueil
+	 */
+	public Accueil getAccueil() {
 		return accueil;
 	}
 
 
 
-	public void setAcceuil(Acceuil acceuil) {
-		this.accueil = acceuil;
+	/**
+	 * @param accueil the accueil to set
+	 */
+	public void setAccueil(Accueil accueil) {
+		this.accueil = accueil;
 	}
+
+
+
+	/**
+	 * @return the itinerairesProposees
+	 */
+	public ItinerairesProposees getItinerairesProposees() {
+		return itinerairesProposees;
+	}
+
+
+
+	/**
+	 * @param itinerairesProposees the itinerairesProposees to set
+	 */
+	public void setItinerairesProposees(ItinerairesProposees itinerairesProposees) {
+		this.itinerairesProposees = itinerairesProposees;
+	}
+
+
+
+	/**
+	 * @return the consultationHoraire
+	 */
+	public ConsultationHoraire getConsultationHoraire() {
+		return consultationHoraire;
+	}
+
+
+
+	/**
+	 * @param consultationHoraire the consultationHoraire to set
+	 */
+	public void setConsultationHoraire(ConsultationHoraire consultationHoraire) {
+		this.consultationHoraire = consultationHoraire;
+	}
+
+
+
+	/**
+	 * @return the mainFrame
+	 */
+	public MainFrame getMainFrame() {
+		return mainFrame;
+	}
+
+
+
+	/**
+	 * @param mainFrame the mainFrame to set
+	 */
+	public void setMainFrame(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
+	}
+
 	
+
+
+	/**
+	 * @return the calculItineraire
+	 */
 	public CalculItineraire getCalculItineraire() {
 		return calculItineraire;
 	}
 
 
 
+	/**
+	 * @param calculItineraire the calculItineraire to set
+	 */
 	public void setCalculItineraire(CalculItineraire calculItineraire) {
 		this.calculItineraire = calculItineraire;
 	}
-
 
 
 

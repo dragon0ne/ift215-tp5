@@ -5,11 +5,24 @@ package controler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+
+import model.Model;
 import model.Textes;
+import model.Trajet;
 
-import view.Acceuil;
+import view.Accueil;
 import view.CalculItineraire;
+import view.ItinerairesProposees;
+import view.MainFrame;
+import view.ResultatItineraire;
 import view.Vue;
 
 /**
@@ -17,20 +30,26 @@ import view.Vue;
  *
  */
 public class Controler {
-	private Acceuil acceuil;
+	private Accueil acceuil;
 	private CalculItineraire calculItineraire;
+	private ItinerairesProposees itinerairesProposees;
 	private Vue vue;
 	private Textes textes;
+	private Model model;
 
 	public Controler() {
 		// TODO Auto-generated constructor stub
 		this.textes = new Textes();
 		this.vue = new Vue();
 		
-		acceuil = vue.getAcceuil();
-		calculItineraire = vue.getCalculItineraire();
-		//acceuil.setVisible(true);
+		this.acceuil = vue.getAccueil();
+		this.calculItineraire = vue.getCalculItineraire();
+		this.itinerairesProposees = vue.getItinerairesProposees();
 		
+		//acceuil.setVisible(true);
+		this.model = new Model();
+
+//START Acceuil page		
 		acceuil.getBtnEN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				acceuil.getLblBienvenueAuGreyhound().setText(textes.getAcceuil_en().get(0));
@@ -49,11 +68,136 @@ public class Controler {
 		
 		acceuil.getBtn_calculer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				calculItineraire.setVisible(true);
-				acceuil.setVisible(false);
+				vue.getMainFrame().showPanel("calcul");
+				for(String villeDepart : model.getTousLesTrajets().keySet()){
+					calculItineraire.getCbLieuDepart().addItem(villeDepart);
+				}
 			}
 		});
-			
+		
+		acceuil.getBtn_consulter().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vue.getMainFrame().showPanel("horaire");
+			}
+		});
+		
+		acceuil.getBtnQuit().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vue.getMainFrame().setVisible(false);
+			}
+		});
+//END Acceuil page
+		
+//START CALCULITINERAIRE PAGE
+		calculItineraire.getBtnFR().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				calculItineraire.getLabelLogo().setText(textes.getCalculIt_fr().get(0));
+				calculItineraire.getLabelLieuDepart().setText(textes.getCalculIt_fr().get(1));
+				calculItineraire.getLabelLieuArrive().setText(textes.getCalculIt_fr().get(2));
+				calculItineraire.getBtnAllerRetour().setText(textes.getCalculIt_fr().get(3));
+				calculItineraire.getBtnAllerSimple().setText(textes.getCalculIt_fr().get(4));
+				calculItineraire.getLabelDateDepart().setText(textes.getCalculIt_fr().get(5));
+				calculItineraire.getLabelDateRetour().setText(textes.getCalculIt_fr().get(6));
+				calculItineraire.getLblAdultes().setText(textes.getCalculIt_fr().get(8));
+				calculItineraire.getLblEtudiants().setText(textes.getCalculIt_fr().get(9));
+				calculItineraire.getLblEnfants().setText(textes.getCalculIt_fr().get(10));
+				calculItineraire.getBtnAnnuler().setText(textes.getCalculIt_fr().get(11));
+				calculItineraire.getBtnCalculer().setText(textes.getCalculIt_fr().get(12));
+			}
+		});
+		calculItineraire.getBtnEN().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				calculItineraire.getLabelLogo().setText(textes.getCalculIt_en().get(0));
+				calculItineraire.getLabelLieuDepart().setText(textes.getCalculIt_en().get(1));
+				calculItineraire.getLabelLieuArrive().setText(textes.getCalculIt_en().get(2));
+				calculItineraire.getBtnAllerRetour().setText(textes.getCalculIt_en().get(3));
+				calculItineraire.getBtnAllerSimple().setText(textes.getCalculIt_en().get(4));
+				calculItineraire.getLabelDateDepart().setText(textes.getCalculIt_en().get(5));
+				calculItineraire.getLabelDateRetour().setText(textes.getCalculIt_en().get(6));
+				calculItineraire.getLblAdultes().setText(textes.getCalculIt_en().get(8));
+				calculItineraire.getLblEtudiants().setText(textes.getCalculIt_en().get(9));
+				calculItineraire.getLblEnfants().setText(textes.getCalculIt_en().get(10));
+				calculItineraire.getBtnAnnuler().setText(textes.getCalculIt_en().get(11));
+				calculItineraire.getBtnCalculer().setText(textes.getCalculIt_en().get(12));
+			}
+		});
+		
+				
+		calculItineraire.getCbLieuDepart().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				calculItineraire.getCbLieuArrive().removeAllItems();
+				for(String villeDestination : model.getVillesDestination(calculItineraire.getCbLieuDepart().getSelectedItem().toString()).keySet())
+				calculItineraire.getCbLieuArrive().addItem(villeDestination);
+			}
+		});
+		
+		calculItineraire.getBtnAllerSimple().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				calculItineraire.getLabelDateRetour().setEnabled(false);
+				calculItineraire.getDateRetour().setEnabled(false);
+			}
+		});
+		
+		calculItineraire.getBtnAllerRetour().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				calculItineraire.getLabelDateRetour().setEnabled(true);
+				calculItineraire.getDateRetour().setEnabled(true);
+			}
+		});
+		
+		calculItineraire.getBtnAnnuler().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vue.getMainFrame().showPanel("accueil");
+			}
+		});
+		
+		calculItineraire.getBtnQuit().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vue.getMainFrame().setVisible(false);
+			}
+		});
+		
+		calculItineraire.getBtnCalculer().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Date date = new Date(calculItineraire.getDateDepart().getValue().toString());
+				boolean departIsWeekend=false;
+				
+					if((date.getDay()==0)||(date.getDay()==6)){
+						departIsWeekend = true;
+					}
+		
+					for(Trajet trajet: model.getTrajet(calculItineraire.getCbLieuDepart().getSelectedItem().toString(), calculItineraire.getCbLieuArrive().getSelectedItem().toString(), departIsWeekend)){
+						itinerairesProposees.getResultsPanel().add(new ResultatItineraire(trajet));
+					}
+				itinerairesProposees.getLblAller().setVisible(true);
+				itinerairesProposees.getLblRetour().setVisible(false);
+				vue.getMainFrame().showPanel("itinerairesProposees");
+
+				
+			}
+		});
+		
+//END CALCULITINERAIRE PAGE
+
+//START itinerairesProposees PAGE
+		
+		itinerairesProposees.getBtnQuit().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				vue.getMainFrame().setVisible(false);
+			}
+		});
+		
+		itinerairesProposees.getBtnFr().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+//END itinerairesProposees PAGE
+		
+//START CONSULTATIONHORAIRE PAGE
+		
+//END CONSULTATIONHORAIRE PAGE
 	}
 	
 }

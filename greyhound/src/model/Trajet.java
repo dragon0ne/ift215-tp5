@@ -3,7 +3,10 @@
  */
 package model;
 
+
+import java.util.ArrayList;
 import java.util.Vector;
+import java.util.List;
 
 /**
  * @author birj2002
@@ -12,13 +15,15 @@ import java.util.Vector;
 public class Trajet {
 	
 	private Vector<Point> trajet;
-	private float prix;
+	private double prix;
 	private boolean est_weekend;
 	
 	
-	public Trajet(Vector<Point> trajet, float prix, boolean est_weekend) {
-		super();
-		this.trajet = trajet;
+	public Trajet(Vector<Point> trajet, double prix, boolean est_weekend) {
+		this.trajet = new Vector<Point>();
+		for(int i = 0 ; i<trajet.size();i++){
+			this.trajet.add(trajet.get(i));
+		}
 		this.prix = prix;
 		this.est_weekend = est_weekend;
 	}
@@ -26,7 +31,7 @@ public class Trajet {
 	public Trajet() {
 		
 		this.trajet = new Vector<Point>();
-		this.prix = 0.0f;
+		this.prix = 0.0;
 		this.est_weekend = false;
 	}
 
@@ -35,14 +40,16 @@ public class Trajet {
 	}
 
 	public void setTrajet(Vector<Point> trajet) {
-		this.trajet = trajet;
+		for(int i = 0 ; i<trajet.size();i++){
+			this.trajet.add(trajet.get(i));
+		}
 	}
 
-	public float getPrix() {
+	public double getPrix() {
 		return prix;
 	}
 
-	public void setPrix(float prix) {
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
@@ -53,8 +60,22 @@ public class Trajet {
 	public void setEst_weekend(boolean est_weekend) {
 		this.est_weekend = est_weekend;
 	}
+	public String getDure(){
+		int hh = 0;
+		int mm = 0;
+		int tmp = ((this.trajet.lastElement().getHH()*60)+this.trajet.lastElement().getMM())-((this.trajet.firstElement().getHH()*60)+this.trajet.firstElement().getMM());	
+		hh = tmp/60;
+		mm = tmp%60;
+		return (hh+":"+mm);
+	}
 	
-	
+	public List<String> getVillesDetail(){
+		List<String> villes = new ArrayList<String>();
+		for(Point ville : this.trajet){
+			villes.add(ville.getVille());
+		}
+		return(villes);
+	}
 	
 	
 

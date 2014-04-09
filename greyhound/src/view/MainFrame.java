@@ -12,19 +12,19 @@ public class MainFrame extends JFrame
 	private JPanel contentPane;
 
 	
-	public MainFrame(Acceuil accueil, CalculItineraire calculItineraire, ItinerairesProposees itinerairesProposees, ConsultationHoraire consultationHoraire)
+	public MainFrame(Accueil accueil, CalculItineraire calculItineraire, ItinerairesProposees itinerairesProposees, ConsultationHoraire consultationHoraire)
 	{
 		setResizable(false);
 		setTitle("Greyhound");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 600, 400);
 		contentPane = new JPanel(new CardLayout());
 		setContentPane(contentPane);
 		
 		
 		contentPane.add(accueil, "accueil");
 		contentPane.add(calculItineraire, "calcul");
-		contentPane.add(itinerairesProposees, "accueil");
+		contentPane.add(itinerairesProposees, "itinerairesProposees");
 		contentPane.add(consultationHoraire , "horaire");
 	}
 	
