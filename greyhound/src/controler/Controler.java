@@ -3,12 +3,14 @@
  */
 package controler;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 import model.Model;
 import model.Textes;
@@ -45,6 +47,10 @@ public class Controler {
 		this.itinerairesProposees = vue.getItinerairesProposees();
 		this.consultationHoraire = vue.getConsultationHoraire();
 
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		
+		vue.getMainFrame().setMaximumSize(new Dimension(screenSize.width, screenSize.height-500));
+		
 		// START Acceuil page
 		acceuil.getBtnEN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -80,6 +86,7 @@ public class Controler {
 		acceuil.getBtn_consulter().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vue.getMainFrame().showPanel("horaire");
+				consultationHoraire.getCbDepart().setSelectedIndex(0);
 			}
 		});
 
@@ -192,12 +199,29 @@ public class Controler {
 		calculItineraire.getBtnCalculer().addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						Date date = (Date) calculItineraire.getDateDepart()
+						Date dateDepart = (Date) calculItineraire.getDateDepart()
 								.getModel().getValue();
-						;
+						
+						Date dateRetour = (Date) calculItineraire.getDateRetour()
+								.getModel().getValue();
+						
+						if(dateRetour.before(dateDepart))
+						{
+							calculItineraire.displayError("Date de retour antérieure à la date de départ");
+							return;
+						}
+						Calendar yesterday = Calendar.getInstance();
+						yesterday.add(Calendar.DATE, -1);
+						
+						if(dateDepart.before(yesterday.getTime()))
+						{
+							calculItineraire.displayError("Date de départ choisie antérieur à la date d'aujourd'hui");
+							return;
+						}
+						
 						boolean departIsWeekend = false;
 
-						if ((date.getDay() == 0) || (date.getDay() == 6)) {
+						if ((dateDepart.getDay() == 0) || (dateDepart.getDay() == 6)) {
 							departIsWeekend = true;
 						}
 
@@ -213,7 +237,8 @@ public class Controler {
 						itinerairesProposees.getLblAller().setVisible(true);
 						itinerairesProposees.getLblRetour().setVisible(false);
 						vue.getMainFrame().showPanel("itinerairesProposees");
-
+						
+						calculItineraire.displayError("");
 					}
 				});
 

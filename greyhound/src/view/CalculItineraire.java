@@ -63,6 +63,9 @@ public class CalculItineraire extends JPanel {
 	private TitledBorder titled; 
 	private JButton btnQuit;
 
+	boolean departhiden = false;
+	private JLabel errorLabel;
+	
 	JDatePickerImpl datepDepart = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(new Date())));
 	JDatePickerImpl datepRetour = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(new Date())));
 	private JPanel panelDate;
@@ -218,6 +221,10 @@ public class CalculItineraire extends JPanel {
 		flowLayout_btn.setAlignment(FlowLayout.RIGHT);
 		this.add(panelBtnAction);
 		
+		errorLabel = new JLabel(" ");
+		errorLabel.setForeground(Color.RED);
+		panelBtnAction.add(errorLabel);
+		
 		label_1 = new JLabel("  ");
 		panelBtnAction.add(label_1);
 		
@@ -323,7 +330,7 @@ public class CalculItineraire extends JPanel {
 		
 	}
 
-	boolean departhiden = false;
+	
 	
 	public void HideDepartDatep(boolean toHide)
 	{
@@ -495,7 +502,12 @@ public class CalculItineraire extends JPanel {
 	}
 
 
-
+	public void displayError(String error)
+	{
+		this.errorLabel.setText(error);
+	}
+	
+	
 	/**
 	 * @return the cbLieuDepart
 	 */
