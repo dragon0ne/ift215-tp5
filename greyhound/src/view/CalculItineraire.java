@@ -1,41 +1,37 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
+import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.TitledBorder;
-import javax.swing.JButton;
-
-import java.util.Calendar;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JTextPane;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SpinnerDateModel;
-import java.util.Date;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+
+import net.sourceforge.jdatepicker.JDatePicker;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class CalculItineraire extends JPanel {
 
@@ -65,10 +61,14 @@ public class CalculItineraire extends JPanel {
 	private JButton btnCalculer;
 	private JLabel label_1;
 	private TitledBorder titled; 
-	private JSpinner dateDepart;
-	private JSpinner dateRetour;
 	private JButton btnQuit;
 
+	JDatePickerImpl datepDepart = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(new Date())));
+	JDatePickerImpl datepRetour = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(new Date())));
+	private JPanel panelDate;
+	
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -152,7 +152,7 @@ public class CalculItineraire extends JPanel {
 		buttons.add(btnAllerSimple);
 		
 		
-		JPanel panelDate = new JPanel();
+		panelDate = new JPanel();
 		FlowLayout flowLayout_3 = (FlowLayout) panelDate.getLayout();
 		flowLayout_3.setHgap(20);
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
@@ -162,18 +162,15 @@ public class CalculItineraire extends JPanel {
 		panelDate.add(labelDateDepart);
 		
 			
-		dateDepart = new JSpinner();
-		dateDepart.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
-		dateDepart.setEditor(new JSpinner.DateEditor(dateDepart, "dd-MM-yyyy"));
-		panelDate.add(dateDepart);
+	
+		panelDate.add(datepDepart);
+		
+		
 		
 		labelDateRetour = new JLabel("Date de retour : ");
 		panelDate.add(labelDateRetour);
 		
-		dateRetour = new JSpinner();
-		dateRetour.setModel(new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.DAY_OF_YEAR));
-		dateRetour.setEditor(new JSpinner.DateEditor(dateRetour, "dd-MM-yyyy"));
-		panelDate.add(dateRetour);
+		panelDate.add(datepRetour);
 		
 		
 		  
@@ -192,23 +189,27 @@ public class CalculItineraire extends JPanel {
 		flowLayout_4.setHgap(20);
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		this.add(panelBillets);
+		panelBillets.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		lblAdultes = new JLabel("Adultes : ");
 		panelBillets.add(lblAdultes);
 		
 		spinnerAdultes = new JSpinner();
+		spinnerAdultes.setModel(new SpinnerNumberModel(0, 0, 20, 1));
 		panelBillets.add(spinnerAdultes);
 		
 		lblEtudiants = new JLabel("\u00C9tudiants : ");
 		panelBillets.add(lblEtudiants);
 		
 		spinnerEtudiants = new JSpinner();
+		spinnerEtudiants.setModel(new SpinnerNumberModel(0, 0, 20, 1));
 		panelBillets.add(spinnerEtudiants);
 		
 		lblEnfants = new JLabel("Enfants :");
 		panelBillets.add(lblEnfants);
 		
 		spinnerEnfants = new JSpinner();
+		spinnerEnfants.setModel(new SpinnerNumberModel(0, 0, 20, 1));
 		panelBillets.add(spinnerEnfants);
 		
 		JPanel panelBtnAction = new JPanel();
@@ -308,8 +309,8 @@ public class CalculItineraire extends JPanel {
 	/**
 	 * @return the dateDepart
 	 */
-	public JSpinner getDateDepart() {
-		return dateDepart;
+	public JDatePickerImpl getDateDepart() {
+		return datepDepart;
 	}
 
 
@@ -317,10 +318,35 @@ public class CalculItineraire extends JPanel {
 	/**
 	 * @return the dateRetour
 	 */
-	public JSpinner getDateRetour() {
-		return dateRetour;
+	public JDatePickerImpl getDateRetour() {
+		return datepRetour;
+		
 	}
 
+	boolean departhiden = false;
+	
+	public void HideDepartDatep(boolean toHide)
+	{
+		if(toHide == departhiden)
+			return;
+		
+		if(toHide)
+		{
+
+			panelDate.remove(labelDateRetour);
+			panelDate.remove(datepRetour);
+		}
+		else
+		{
+			panelDate.add(labelDateRetour);
+			panelDate.add(datepRetour);
+		}
+		
+		panelDate.repaint();
+		
+		departhiden = !departhiden;
+			
+	}
 
 
 	/**

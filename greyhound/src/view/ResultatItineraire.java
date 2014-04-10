@@ -3,6 +3,7 @@ package view;
 import javax.swing.JPanel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -13,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListModel;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import model.Trajet;
 
@@ -32,6 +35,8 @@ public class ResultatItineraire extends JPanel
 	 */
 	public ResultatItineraire(Trajet trajet) {
 		setLayout(new BorderLayout(0, 0));
+		this.setBorder(new LineBorder(new Color(0, 0, 0)));
+		
 		
 		JPanel topZonePanel = new JPanel();
 		add(topZonePanel, BorderLayout.NORTH);

@@ -5,29 +5,24 @@ package controler;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
-import javax.swing.JFormattedTextField;
-import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 import model.Model;
 import model.Textes;
 import model.Trajet;
-
 import view.Accueil;
 import view.CalculItineraire;
+import view.ConsultationHoraire;
 import view.ItinerairesProposees;
-import view.MainFrame;
 import view.ResultatItineraire;
 import view.Vue;
 
 /**
  * @author HELL
- *
+ * 
  */
 public class Controler {
 	private Accueil acceuil;
@@ -36,168 +31,272 @@ public class Controler {
 	private Vue vue;
 	private Textes textes;
 	private Model model;
+	private ConsultationHoraire consultationHoraire;
 
 	public Controler() {
 		// TODO Auto-generated constructor stub
 		this.textes = new Textes();
-		this.vue = new Vue();
-		
+
+		// acceuil.setVisible(true);
+		this.model = new Model();
+		this.vue = new Vue(new ConsultationHoraire(model.getVillesDepart()));
 		this.acceuil = vue.getAccueil();
 		this.calculItineraire = vue.getCalculItineraire();
 		this.itinerairesProposees = vue.getItinerairesProposees();
-		
-		//acceuil.setVisible(true);
-		this.model = new Model();
+		this.consultationHoraire = vue.getConsultationHoraire();
 
-//START Acceuil page		
+		// START Acceuil page
 		acceuil.getBtnEN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				acceuil.getLblBienvenueAuGreyhound().setText(textes.getAcceuil_en().get(0));
-				acceuil.getBtn_calculer().setText(textes.getAcceuil_en().get(1));
-				acceuil.getBtn_consulter().setText(textes.getAcceuil_en().get(2));
+				acceuil.getLblBienvenueAuGreyhound().setText(
+						textes.getAcceuil_en().get(0));
+				acceuil.getBtn_calculer()
+						.setText(textes.getAcceuil_en().get(1));
+				acceuil.getBtn_consulter().setText(
+						textes.getAcceuil_en().get(2));
 			}
 		});
-		
+
 		acceuil.getBtnFR().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				acceuil.getLblBienvenueAuGreyhound().setText(textes.getAcceuil_fr().get(0));
-				acceuil.getBtn_calculer().setText(textes.getAcceuil_fr().get(1));
-				acceuil.getBtn_consulter().setText(textes.getAcceuil_fr().get(2));
+				acceuil.getLblBienvenueAuGreyhound().setText(
+						textes.getAcceuil_fr().get(0));
+				acceuil.getBtn_calculer()
+						.setText(textes.getAcceuil_fr().get(1));
+				acceuil.getBtn_consulter().setText(
+						textes.getAcceuil_fr().get(2));
 			}
 		});
-		
+
 		acceuil.getBtn_calculer().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vue.getMainFrame().showPanel("calcul");
-				for(String villeDepart : model.getTousLesTrajets().keySet()){
+				for (String villeDepart : model.getTousLesTrajets().keySet()) {
 					calculItineraire.getCbLieuDepart().addItem(villeDepart);
 				}
 			}
 		});
-		
+
 		acceuil.getBtn_consulter().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vue.getMainFrame().showPanel("horaire");
 			}
 		});
-		
+
 		acceuil.getBtnQuit().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vue.getMainFrame().setVisible(false);
 			}
 		});
-//END Acceuil page
-		
-//START CALCULITINERAIRE PAGE
+		// END Acceuil page
+
+		// START CALCULITINERAIRE PAGE
 		calculItineraire.getBtnFR().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				calculItineraire.getLabelLogo().setText(textes.getCalculIt_fr().get(0));
-				calculItineraire.getLabelLieuDepart().setText(textes.getCalculIt_fr().get(1));
-				calculItineraire.getLabelLieuArrive().setText(textes.getCalculIt_fr().get(2));
-				calculItineraire.getBtnAllerRetour().setText(textes.getCalculIt_fr().get(3));
-				calculItineraire.getBtnAllerSimple().setText(textes.getCalculIt_fr().get(4));
-				calculItineraire.getLabelDateDepart().setText(textes.getCalculIt_fr().get(5));
-				calculItineraire.getLabelDateRetour().setText(textes.getCalculIt_fr().get(6));
-				calculItineraire.getLblAdultes().setText(textes.getCalculIt_fr().get(8));
-				calculItineraire.getLblEtudiants().setText(textes.getCalculIt_fr().get(9));
-				calculItineraire.getLblEnfants().setText(textes.getCalculIt_fr().get(10));
-				calculItineraire.getBtnAnnuler().setText(textes.getCalculIt_fr().get(11));
-				calculItineraire.getBtnCalculer().setText(textes.getCalculIt_fr().get(12));
+				calculItineraire.getLabelLogo().setText(
+						textes.getCalculIt_fr().get(0));
+				calculItineraire.getLabelLieuDepart().setText(
+						textes.getCalculIt_fr().get(1));
+				calculItineraire.getLabelLieuArrive().setText(
+						textes.getCalculIt_fr().get(2));
+				calculItineraire.getBtnAllerRetour().setText(
+						textes.getCalculIt_fr().get(3));
+				calculItineraire.getBtnAllerSimple().setText(
+						textes.getCalculIt_fr().get(4));
+				calculItineraire.getLabelDateDepart().setText(
+						textes.getCalculIt_fr().get(5));
+				calculItineraire.getLabelDateRetour().setText(
+						textes.getCalculIt_fr().get(6));
+				calculItineraire.getLblAdultes().setText(
+						textes.getCalculIt_fr().get(8));
+				calculItineraire.getLblEtudiants().setText(
+						textes.getCalculIt_fr().get(9));
+				calculItineraire.getLblEnfants().setText(
+						textes.getCalculIt_fr().get(10));
+				calculItineraire.getBtnAnnuler().setText(
+						textes.getCalculIt_fr().get(11));
+				calculItineraire.getBtnCalculer().setText(
+						textes.getCalculIt_fr().get(12));
 			}
 		});
 		calculItineraire.getBtnEN().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				calculItineraire.getLabelLogo().setText(textes.getCalculIt_en().get(0));
-				calculItineraire.getLabelLieuDepart().setText(textes.getCalculIt_en().get(1));
-				calculItineraire.getLabelLieuArrive().setText(textes.getCalculIt_en().get(2));
-				calculItineraire.getBtnAllerRetour().setText(textes.getCalculIt_en().get(3));
-				calculItineraire.getBtnAllerSimple().setText(textes.getCalculIt_en().get(4));
-				calculItineraire.getLabelDateDepart().setText(textes.getCalculIt_en().get(5));
-				calculItineraire.getLabelDateRetour().setText(textes.getCalculIt_en().get(6));
-				calculItineraire.getLblAdultes().setText(textes.getCalculIt_en().get(8));
-				calculItineraire.getLblEtudiants().setText(textes.getCalculIt_en().get(9));
-				calculItineraire.getLblEnfants().setText(textes.getCalculIt_en().get(10));
-				calculItineraire.getBtnAnnuler().setText(textes.getCalculIt_en().get(11));
-				calculItineraire.getBtnCalculer().setText(textes.getCalculIt_en().get(12));
+				calculItineraire.getLabelLogo().setText(
+						textes.getCalculIt_en().get(0));
+				calculItineraire.getLabelLieuDepart().setText(
+						textes.getCalculIt_en().get(1));
+				calculItineraire.getLabelLieuArrive().setText(
+						textes.getCalculIt_en().get(2));
+				calculItineraire.getBtnAllerRetour().setText(
+						textes.getCalculIt_en().get(3));
+				calculItineraire.getBtnAllerSimple().setText(
+						textes.getCalculIt_en().get(4));
+				calculItineraire.getLabelDateDepart().setText(
+						textes.getCalculIt_en().get(5));
+				calculItineraire.getLabelDateRetour().setText(
+						textes.getCalculIt_en().get(6));
+				calculItineraire.getLblAdultes().setText(
+						textes.getCalculIt_en().get(8));
+				calculItineraire.getLblEtudiants().setText(
+						textes.getCalculIt_en().get(9));
+				calculItineraire.getLblEnfants().setText(
+						textes.getCalculIt_en().get(10));
+				calculItineraire.getBtnAnnuler().setText(
+						textes.getCalculIt_en().get(11));
+				calculItineraire.getBtnCalculer().setText(
+						textes.getCalculIt_en().get(12));
 			}
 		});
-		
-				
-		calculItineraire.getCbLieuDepart().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				calculItineraire.getCbLieuArrive().removeAllItems();
-				for(String villeDestination : model.getVillesDestination(calculItineraire.getCbLieuDepart().getSelectedItem().toString()).keySet())
-				calculItineraire.getCbLieuArrive().addItem(villeDestination);
-			}
-		});
-		
-		calculItineraire.getBtnAllerSimple().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				calculItineraire.getLabelDateRetour().setEnabled(false);
-				calculItineraire.getDateRetour().setEnabled(false);
-			}
-		});
-		
-		calculItineraire.getBtnAllerRetour().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				calculItineraire.getLabelDateRetour().setEnabled(true);
-				calculItineraire.getDateRetour().setEnabled(true);
-			}
-		});
-		
-		calculItineraire.getBtnAnnuler().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				vue.getMainFrame().showPanel("accueil");
-			}
-		});
-		
+
+		calculItineraire.getCbLieuDepart().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						calculItineraire.getCbLieuArrive().removeAllItems();
+						for (String villeDestination : model
+								.getVillesDestination(
+										calculItineraire.getCbLieuDepart()
+												.getSelectedItem().toString())
+								.keySet())
+							calculItineraire.getCbLieuArrive().addItem(
+									villeDestination);
+					}
+				});
+
+		calculItineraire.getBtnAllerSimple().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						calculItineraire.HideDepartDatep(true);
+					}
+				});
+
+		calculItineraire.getBtnAllerRetour().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						calculItineraire.HideDepartDatep(false);
+					}
+				});
+
+		calculItineraire.getBtnAnnuler().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						vue.getMainFrame().showPanel("accueil");
+					}
+				});
+
 		calculItineraire.getBtnQuit().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				vue.getMainFrame().setVisible(false);
 			}
 		});
-		
-		calculItineraire.getBtnCalculer().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Date date = new Date(calculItineraire.getDateDepart().getValue().toString());
-				boolean departIsWeekend=false;
-				
-					if((date.getDay()==0)||(date.getDay()==6)){
-						departIsWeekend = true;
-					}
-		
-					for(Trajet trajet: model.getTrajet(calculItineraire.getCbLieuDepart().getSelectedItem().toString(), calculItineraire.getCbLieuArrive().getSelectedItem().toString(), departIsWeekend)){
-						itinerairesProposees.getResultsPanel().add(new ResultatItineraire(trajet));
-					}
-				itinerairesProposees.getLblAller().setVisible(true);
-				itinerairesProposees.getLblRetour().setVisible(false);
-				vue.getMainFrame().showPanel("itinerairesProposees");
 
-				
-			}
-		});
-		
-//END CALCULITINERAIRE PAGE
+		calculItineraire.getBtnCalculer().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						Date date = (Date) calculItineraire.getDateDepart()
+								.getModel().getValue();
+						;
+						boolean departIsWeekend = false;
 
-//START itinerairesProposees PAGE
-		
-		itinerairesProposees.getBtnQuit().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				vue.getMainFrame().setVisible(false);
-			}
-		});
-		
+						if ((date.getDay() == 0) || (date.getDay() == 6)) {
+							departIsWeekend = true;
+						}
+
+						for (Trajet trajet : model.getTrajet(
+								calculItineraire.getCbLieuDepart()
+										.getSelectedItem().toString(),
+								calculItineraire.getCbLieuArrive()
+										.getSelectedItem().toString(),
+								departIsWeekend)) {
+							itinerairesProposees.getResultsPanel().add(
+									new ResultatItineraire(trajet));
+						}
+						itinerairesProposees.getLblAller().setVisible(true);
+						itinerairesProposees.getLblRetour().setVisible(false);
+						vue.getMainFrame().showPanel("itinerairesProposees");
+
+					}
+				});
+
+		// END CALCULITINERAIRE PAGE
+
+		// START itinerairesProposees PAGE
+
+		itinerairesProposees.getBtnQuit().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						vue.getMainFrame().setVisible(false);
+					}
+				});
+
 		itinerairesProposees.getBtnFr().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 			}
 		});
-		
-//END itinerairesProposees PAGE
-		
-//START CONSULTATIONHORAIRE PAGE
-		
-//END CONSULTATIONHORAIRE PAGE
+
+		itinerairesProposees.getBtnRetour().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						vue.getMainFrame().showPanel("calcul");
+					}
+				});
+		// END itinerairesProposees PAGE
+
+		// START CONSULTATIONHORAIRE PAGE
+		JButton b = consultationHoraire.getBtnConsulter();
+		b.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String depart = consultationHoraire.getDepart();
+				String dest = consultationHoraire.getDest();
+				consultationHoraire.displayHoraries(model.getTousLesTrajets()
+						.get(depart), dest);
+			}
+		});
+
+		consultationHoraire.getBtnRetour().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						vue.getMainFrame().showPanel("accueil");
+					}
+				});
+
+		consultationHoraire.getBtnQuit().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						vue.getMainFrame().setVisible(false);
+					}
+				});
+
+		consultationHoraire.getCbDepart().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						consultationHoraire.getCbDest().removeAllItems();
+						for (String villeDestination : model
+								.getVillesDestination(
+										consultationHoraire.getCbDepart()
+												.getSelectedItem().toString())
+								.keySet())
+							consultationHoraire.getCbDest().addItem(
+									villeDestination);
+					}
+				});
+
+		consultationHoraire.getCbDepart().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						consultationHoraire.getCbDest().removeAllItems();
+
+						for (String villeDestination : model
+								.getVillesDestination(
+										consultationHoraire.getCbDepart()
+												.getSelectedItem().toString())
+								.keySet())
+							consultationHoraire.getCbDest().addItem(
+									villeDestination);
+					}
+				});
+
+		// END CONSULTATIONHORAIRE PAGE
 	}
-	
+
 }

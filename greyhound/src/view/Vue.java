@@ -16,8 +16,9 @@ public class Vue extends JFrame implements Observer {
 
 	private MainFrame mainFrame;
 
-	public Vue()
+	public Vue(ConsultationHoraire consultationH)
 	{
+		this.consultationHoraire = consultationH;
 		
 		// Utiliser le look and feel de l'OS utilisé si possible.		
 		try {
@@ -31,14 +32,9 @@ public class Vue extends JFrame implements Observer {
 		//TODO s'abonner aux évènements boutons
 		
 		
-		//TODO Chercher dans le modèle les villes
-		ArrayList<String> villes = new ArrayList<String>();
-		villes.add("Montréal");
-		villes.add("Toronto");
+
 		
-		consultationHoraire= new ConsultationHoraire(villes);
-		
-		mainFrame = new MainFrame(accueil, calculItineraire, itinerairesProposees, consultationHoraire);
+		mainFrame = new MainFrame(accueil, calculItineraire, itinerairesProposees, consultationH);
 		mainFrame.setVisible(true);
 		mainFrame.showPanel("accueil");
 		

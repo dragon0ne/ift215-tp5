@@ -60,13 +60,23 @@ public class Trajet {
 	public void setEst_weekend(boolean est_weekend) {
 		this.est_weekend = est_weekend;
 	}
+	
+	public String getDure(Point p2)
+	{
+		int tmp = ((p2.getHH()*60)+p2.getMM())-((this.trajet.firstElement().getHH()*60)+this.trajet.firstElement().getMM());	
+		
+		int hh = tmp/60;
+		int mm = tmp%60;
+		return (hh+":"+ (mm<10? "0" + mm : mm));
+	}
+	
 	public String getDure(){
 		int hh = 0;
 		int mm = 0;
 		int tmp = ((this.trajet.lastElement().getHH()*60)+this.trajet.lastElement().getMM())-((this.trajet.firstElement().getHH()*60)+this.trajet.firstElement().getMM());	
 		hh = tmp/60;
 		mm = tmp%60;
-		return (hh+":"+mm);
+		return (hh+":"+ (mm<10? "0" + mm : mm));
 	}
 	
 	public List<String> getVillesDetail(){

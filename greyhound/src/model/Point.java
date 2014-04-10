@@ -44,7 +44,7 @@ public class Point {
 		MM = mM;
 	}
 	public String getHeure(){
-		return (this.HH +":"+this.MM);
+		return (HH+":"+ (MM<10? "0" + MM : MM));
 	}
 	
 	
